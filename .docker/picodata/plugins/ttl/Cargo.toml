@@ -1,0 +1,27 @@
+[package]
+name = "ttl"
+version = "0.1.0"
+edition = "2024"
+publish = false
+resolver = "3"
+
+[dependencies]
+picodata-plugin = "=25.2.1"
+serde = { version = "1", features = ["derive"] }
+log = "0.4"
+anyhow = "1.0.98"
+rmpv = "1.0.0"
+shors = "0.12.3"
+rmp-serde = "1.0.0"
+picotest = "1.4.0"
+
+[dev-dependencies]
+tokio = "1.29.1"
+rstest = "0.25.0"
+reqwest = { version = "0.12", features = ["blocking"] }
+
+[build-dependencies]
+picodata-pike = "2.7.0"
+
+[lib]
+crate-type = ["cdylib"]

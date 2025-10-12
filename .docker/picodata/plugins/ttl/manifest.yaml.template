@@ -1,0 +1,13 @@
+name: ttl
+description: A plugin for picodata
+version: {{ version }}
+services:
+  - name: example_service
+    description: example service
+    default_configuration:
+      value: example
+migration:
+{% for migration in migrations -%}
+- {{ migration }}
+{% endfor -%}
+
