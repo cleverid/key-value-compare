@@ -1,2 +1,3 @@
 .docker/picodata/tmp
 .docker/picodata/.data
+vendor

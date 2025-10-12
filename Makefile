@@ -18,6 +18,9 @@ infra-up: picodata-up ## Infra. Up
 infra-down: picodata-down ## Infra. Down
 infra-stop: picodata-stop ## Infra. Stop
 
+dev: ## Develop
+	go run main.go
+
 picodata-build: ## Picodata. Build
 	cd .docker/picodata && docker compose build
 picodata-up: ## Picodata. Up
