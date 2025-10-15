@@ -1,1 +1,1 @@
-FROM docker.binary.picodata.io/picodata:25.4.1
+FROM docker.binary.picodata.io/picodata:25.4.2

@@ -3,11 +3,16 @@ package main
 import (
 	"context"
 	"fmt"
+	"math/rand/v2"
 	"os"
+	"strings"
+	"time"
 
 	picogo "github.com/picodata/picodata-go"
 	logger "github.com/picodata/picodata-go/logger"
 	strats "github.com/picodata/picodata-go/strategies"
+
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -22,24 +27,48 @@ func main() {
 		os.Exit(1)
 	}
 	defer pool.Close()
-	/*
-	   CREATE TABLE items (id INTEGER NOT NULL,name TEXT NOT NULL,stock INTEGER,PRIMARY KEY (id)) USING memtx DISTRIBUTED BY (id) OPTION (TIMEOUT = 3.0);
-	   INSERT INTO items VALUES
-	   (1, 'bricks', 1123),
-	   (2, 'panels', 998),
-	   (3, 'piles', 177);
-	*/
-	var (
-		id    int
-		name  string
-		stock int
-	)
-	query := "select * from items where id=$1"
-	err = pool.QueryRow(ctx, query, 2).Scan(&id, &name, &stock)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
-		os.Exit(1)
-	}
 
-	fmt.Println(id, name, stock)
+	query := "INSERT INTO profiles (id, region, ids, expire) VALUES($1, $2, $3, $4)"
+	for i := range(100) {
+		profileId := generateId()
+		region := randomInRange(1, 120) 
+		ids := randomInRangeCount(1, 1000, 10)
+		expire := time.Now().Add(time.Duration(100 * time.Second))
+		result, err := pool.Exec(ctx, query, profileId, region, ids, expire)
+		fmt.Println(i, result, err)
+	}
 }
+
+func generateId() string {
+	result, _ := uuid.NewV6()
+	return result.String()
+}
+
+func randomInRange(min, max int) string {
+	rnd := rand.IntN(max-min) + min
+	return fmt.Sprint(rnd)
+}
+
+func randomInRangeCount(min, max, cnt int) string {
+	result := []string{}
+	for range(cnt) {
+		rnd := randomInRange(min, max)
+		result = append(result, rnd)
+	}
+	return strings.Join(result, ",") 
+}
+
+//func select() {
+//	var (
+//		id    int
+//		name  string
+//		stock int
+//	)
+//	query := "select * from items where id=$1"
+//	err = pool.QueryRow(ctx, query, 2).Scan(&id, &name, &stock)
+//	if err != nil {
+//		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
+//		os.Exit(1)
+//	}
+//	fmt.Println(id, name, stock)
+//}

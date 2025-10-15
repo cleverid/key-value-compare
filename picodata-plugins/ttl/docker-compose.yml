@@ -1,0 +1,6 @@
+services:
+  plugin_build:
+    build: . 
+    image: key-value-compare
+    volumes:
+      - ./target:/app/target
