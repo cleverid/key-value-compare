@@ -5,6 +5,7 @@ services:
     hostname: picodata-1-1
     volumes:
       - .data:/pico
+      - ../../picodata-plugins/ttl/target/release/ttl:/share_dir/ttl
     environment:
       PICODATA_PEER: picodata-1-1:3301
       PICODATA_LISTEN: picodata-1-1:3301
@@ -13,8 +14,8 @@ services:
       PICODATA_FAILURE_DOMAIN: HOST=picodata-1
       PICODATA_INIT_REPLICATION_FACTOR: 2
       PICODATA_HTTP_LISTEN: picodata-1-1:8001
-      
       PICODATA_LOG_LEVEL: info
+      PICODATA_SHARE_DIR: /share_dir
     ports:
       - "13301:3301"
       - "18301:8001"
@@ -33,8 +34,10 @@ services:
       PICODATA_INIT_REPLICATION_FACTOR: 2
       PICODATA_HTTP_LISTEN: picodata-1-2:8001
       PICODATA_LOG_LEVEL: info
+      PICODATA_SHARE_DIR: /share_dir
     volumes:
       - $PWD/tmp:/pico
+      - ../../picodata-plugins/ttl/target/release/ttl:/share_dir/ttl
     ports:
       - "13302:3301"
       - "18302:8001"
@@ -52,8 +55,10 @@ services:
       PICODATA_INIT_REPLICATION_FACTOR: 2
       PICODATA_HTTP_LISTEN: picodata-2-1:8001
       PICODATA_LOG_LEVEL: info
+      PICODATA_SHARE_DIR: /share_dir
     volumes:
       - $PWD/tmp:/pico
+      - ../../picodata-plugins/ttl/target/release/ttl:/share_dir/ttl
     ports:
       - "13303:3301"
       - "18303:8001"
@@ -71,8 +76,10 @@ services:
       PICODATA_INIT_REPLICATION_FACTOR: 2
       PICODATA_HTTP_LISTEN: picodata-2-2:8001
       PICODATA_LOG_LEVEL: info
+      PICODATA_SHARE_DIR: /share_dir
     volumes:
       - $PWD/tmp:/pico
+      - ../../picodata-plugins/ttl/target/release/ttl:/share_dir/ttl
     ports:
       - "13304:3301"
       - "18304:8001"
