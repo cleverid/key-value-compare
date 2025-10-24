@@ -9,6 +9,8 @@ down: infra-down apps-down ## Down
 stop: infra-stop apps-stop ## Stop
 ps: ## View all docker containers
 	docker ps | grep pbs-tools
+clear: ## Clear database
+	cd .docker/picodata && rm -R tmp
 
 apps-up: ## Applications. Up
 apps-down: ## Applications. Down
@@ -35,3 +37,6 @@ picodata-logs: ## Picodata. Logs
 	cd .docker/picodata && docker compose logs -tf picodata
 picodata-bash: ## Picodata. Bash
 	cd .docker/picodata && docker compose exec -it picodata bash
+
+plugins-build: ## Picodata. Bash
+	cd ./picodata-plugins/ttl && docker compose up --build
