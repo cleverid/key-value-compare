@@ -10,7 +10,7 @@ stop: infra-stop apps-stop ## Stop
 ps: ## View all docker containers
 	docker ps | grep pbs-tools
 clear: ## Clear database
-	cd .docker/picodata && rm -R tmp
+	cd .docker/picodata && rm -Rf tmp
 
 apps-up: ## Applications. Up
 apps-down: ## Applications. Down
@@ -18,6 +18,7 @@ apps-stop: ## Applications. Stop
 
 infra-up: picodata-up ## Infra. Up
 infra-down: picodata-down ## Infra. Down
+infra-build: picodata-build ## Infra. Build
 infra-stop: picodata-stop ## Infra. Stop
 
 dev: ## Develop
@@ -39,4 +40,9 @@ picodata-bash: ## Picodata. Bash
 	cd .docker/picodata && docker compose exec -it picodata bash
 
 plugins-build: ## Picodata. Bash
-	cd ./picodata-plugins/ttl && docker compose up --build
+	cd ./picodata-plugins/ttl && docker compose up --build \
+		&& tar -xvzf ./target/release/ttl_0.1.0-debian_11.tar.gz -C ../../.docker/picodata/
+
+plugins-copy: ## Picodata. Copy
+	VERSION=0.1.0 cp picodata-plugins/ttl/target/release/ttl/$VERSION .docker/picodata/ttl/$VERSION \
+	cp picodata-plugins/ttl/target/release/libttl.so .docker/picodata/ttl/$VERSION/libttl.so 

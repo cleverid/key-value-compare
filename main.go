@@ -29,11 +29,11 @@ func main() {
 	defer pool.Close()
 
 	query := "INSERT INTO profiles (id, region, ids, expire) VALUES($1, $2, $3, $4)"
-	for i := range(100) {
+	for i := range(1000) {
 		profileId := generateId()
 		region := randomInRange(1, 120) 
 		ids := randomInRangeCount(1, 1000, 10)
-		expire := time.Now().Add(time.Duration(100 * time.Second))
+		expire := time.Now()
 		result, err := pool.Exec(ctx, query, profileId, region, ids, expire)
 		fmt.Println(i, result, err)
 	}

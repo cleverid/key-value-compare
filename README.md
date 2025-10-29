@@ -10,6 +10,7 @@
 ```
 make picodata-build
 make picodata-up
+make plubings-build
 PICODATA_CONNECTION_URL=postgresql://admin:T0psecret@localhost:55432 go run main.go
 ```
 
@@ -46,6 +47,16 @@ ALTER PLUGIN ttl MIGRATE TO 0.1.0;
 ALTER PLUGIN ttl 0.1.0 ADD SERVICE example_service TO TIER default;
 
 ALTER PLUGIN ttl 0.1.0 ENABLE;
+
+--
+
+ALTER PLUGIN ttl 0.1.0 DISABLE;
+
+DROP PLUGIN ttl 0.1.0
+
+--
+
+select count(*) from profiles;
 ```
 
 ## Подключение
